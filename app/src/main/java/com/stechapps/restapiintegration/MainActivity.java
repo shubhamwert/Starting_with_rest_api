@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,19 +33,24 @@ public class MainActivity extends AppCompatActivity {
         PredictApi predictApi=retrofit.create(PredictApi.class);
         JsonObject j=new JsonObject();
 
-        try {String a="[10,20,30,40,50,60,70,80]";
-            j.addProperty("data","1,2,3,4,5,6,7,8");
+        try {
+            EditText p = findViewById(R.id.ED1);
+
+            String a= p.getText().toString();
+            j.addProperty("data",a);
         }catch (Exception e){
             Log.e("ERRRRRRRRRRRRRRORRRRRRRRRRRRRRR", "connectAndGetApiData: "+e );
         }
         Call<Ressponse> call=predictApi.Predict(j);
+
         call.enqueue(new Callback<Ressponse>() {
             @Override
             public void onResponse(Call<Ressponse> call, Response<Ressponse> response) {
+                if(response.isSuccessful()){
                 TextView tv=findViewById(R.id.tv1);
                 Toast.makeText(MainActivity.this,""+response.body().getPredict(),Toast.LENGTH_SHORT).show();
                 tv.setText(String.format("%s", response.body().getPredict()));
-            }
+            }}
 
             @Override
             public void onFailure(Call<Ressponse> call, Throwable t) {

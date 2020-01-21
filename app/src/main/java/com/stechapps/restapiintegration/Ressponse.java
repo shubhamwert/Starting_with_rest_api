@@ -3,8 +3,8 @@ package com.stechapps.restapiintegration;
 import com.google.gson.annotations.SerializedName;
 
 public class Ressponse {
-    @SerializedName("predict")
-    private float predict;
+    @SerializedName("prediction")
+    private float predict=9;
 
     public float getPredict() {
         return predict;
